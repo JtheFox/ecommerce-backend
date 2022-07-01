@@ -13,9 +13,9 @@ router.get('/', async (req, res) => {
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     });
-    if(!data) return res.status(404).json({message: 'No categories found'});
+    if (!data) return res.status(404).json({ message: 'No categories found' });
     return res.json(data);
-  } catch(err) {
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
@@ -33,9 +33,9 @@ router.get('/:id', async (req, res) => {
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     });
-    if(!data) return res.status(404).json('No category found for this id');
+    if (!data) return res.status(404).json('No category found for this id');
     return res.json(data);
-  } catch(err) {
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
@@ -46,9 +46,10 @@ router.post('/', async (req, res) => {
     const data = await Category.create({
       category_name: req.body.category_name
     });
-    if(!data) return res.status(500);
-    return res.status(200);
-  } catch(err) {
+    console.log(data)
+    if (data) return res.status(200).json(data.dataValues);
+    else return res.status(500);
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
@@ -61,9 +62,9 @@ router.put('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-    if(!data) return res.status(404).json('No category found for this id');
-    return res.json(data);
-  } catch(err) {
+    if (!data) return res.status(404).json('No category found for this id');
+    return res.json('Category updated successfully');
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
@@ -71,14 +72,15 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete a category by its `id` value
   try {
-    const data = await Category.destroy(req.body, {
+    const data = await Category.destroy({
       where: {
         id: req.params.id
       }
     });
-    if(!data) return res.status(404).json('No category found for this id');
-    return res.json(data);
-  } catch(err) {
+    if (!data) return res.status(404).json('No category found for this id');
+    return res.json('Category deleted successfully');
+  } catch (err) {
+    console.log(err)
     res.status(500).json('There was an error with your request');
   }
 });

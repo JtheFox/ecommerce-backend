@@ -21,9 +21,9 @@ router.get('/', async (req, res) => {
         }
       ]
     });
-    if(!data) return res.status(404).json({message: 'No categories found'});
+    if (!data) return res.status(404).json({ message: 'No categories found' });
     return res.json(data);
-  } catch(err) {
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
@@ -42,9 +42,9 @@ router.get('/:id', async (req, res) => {
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     });
-    if(!data) return res.status(404).json({message: 'No category found for this id'});
+    if (!data) return res.status(404).json({ message: 'No category found for this id' });
     return res.json(data);
-  } catch(err) {
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
@@ -126,14 +126,14 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
   try {
-    const data = await Product.destroy(req.body, {
+    const data = await Product.destroy({
       where: {
         id: req.params.id
       }
     });
-    if(!data) return res.status(404).json({message: 'No product found for this id'});
-    return res.status(200).json({messsage: 'Product deleted successfully'});
-  } catch(err) {
+    if (!data) return res.status(404).json({ message: 'No product found for this id' });
+    return res.status(200).json({ messsage: 'Product deleted successfully' });
+  } catch (err) {
     res.status(500).json('There was an error with your request');
   }
 });
